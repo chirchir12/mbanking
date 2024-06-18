@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transaction } from '../../database/entities/transaction.entity';
 
 export class CreatePaymentResponseDto {
   @ApiProperty()
@@ -21,4 +22,16 @@ export class CreatePaymentResponseDto {
 
   @ApiProperty()
   createdAt: Date;
+
+  static data(response: Transaction) {
+    return {
+      id: response.id,
+      source: response.source,
+      destination: response.destination,
+      amount: response.amount,
+      status: response.status,
+      transferType: response.transferType,
+      createdAt: response.createdAt,
+    };
+  }
 }

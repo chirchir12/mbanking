@@ -1,4 +1,12 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { CreatePaymentRequestDto } from './dtos/create_payment_request.dto';
 import { CreatePaymentResponseDto } from './dtos/create_payment_response.dto';
@@ -15,15 +23,15 @@ export class PaymentController {
   async create(
     @Body() body: CreatePaymentRequestDto,
   ): Promise<CreatePaymentResponseDto> {
-    const createdPayment = await this.paymentService.create(body);
-    return {
-      id: createdPayment.id,
-      source: createdPayment.source,
-      destination: createdPayment.destination,
-      amount: createdPayment.amount,
-      status: createdPayment.status,
-      transferType: createdPayment.transferType,
-      createdAt: createdPayment.createdAt,
-    };
+    const result = await this.paymentService.create(body);
+    return CreatePaymentResponseDto.data(result);
+  }
+
+  @Get('/payments/status/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiAcceptedResponse({ type: CreatePaymentResponseDto })
+  async get(@Param('id') id: number) {
+    const result = await this.paymentService.get(id);
+    return CreatePaymentResponseDto.data(result);
   }
 }
