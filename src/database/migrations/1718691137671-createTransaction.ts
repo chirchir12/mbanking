@@ -34,6 +34,13 @@ export class CreateTransaction1718691137671 implements MigrationInterface {
             isNullable: false,
             default: "'pending'",
           },
+          {
+            name: 'transfer_type',
+            type: 'varchar',
+            isNullable: false,
+          },
+          { name: 'created_at', type: 'timestamp', default: 'now()' },
+          { name: 'updated_at', type: 'timestamp', default: 'now()' },
         ],
         indices: [
           {

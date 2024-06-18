@@ -1,9 +1,11 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '@nestjs/config';
 import { Transaction } from './entities/transaction.entity';
+import { TransactionRepository } from './repositories/transaction.repository';
 
+@Global()
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -14,7 +16,7 @@ import { Transaction } from './entities/transaction.entity';
     }),
     TypeOrmModule.forFeature([Transaction]),
   ],
-  providers: [],
-  exports: [],
+  providers: [TransactionRepository],
+  exports: [TransactionRepository],
 })
 export class DatabaseModule {}

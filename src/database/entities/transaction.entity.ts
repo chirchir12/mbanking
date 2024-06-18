@@ -21,5 +21,16 @@ export class Transaction {
   amount: number;
 
   @Column()
-  status: 'pending' | 'completed';
+  status: 'pending' | 'completed' | 'failed';
+
+  @Column({
+    name: 'transfer_type',
+  })
+  transferType: string;
+
+  @Column({ name: 'created_at' })
+  createdAt: Date;
+
+  @Column({ name: 'updated_at' })
+  updatedAt: Date;
 }
