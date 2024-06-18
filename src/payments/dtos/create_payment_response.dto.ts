@@ -18,20 +18,27 @@ export class CreatePaymentResponseDto {
   transferType: string;
 
   @ApiProperty()
+  transferId: string;
+
+  @ApiProperty()
+  metadata: Record<string, any>;
+
+  @ApiProperty()
   status: 'pending' | 'completed' | 'failed';
 
   @ApiProperty()
   createdAt: Date;
 
-  static data(response: Transaction) {
-    return {
-      id: response.id,
-      source: response.source,
-      destination: response.destination,
-      amount: response.amount,
-      status: response.status,
-      transferType: response.transferType,
-      createdAt: response.createdAt,
-    };
+  static data(entity: Transaction) {
+    const transaction = new this();
+    transaction.amount = entity.amount;
+    (transaction.id = entity.id), (transaction.createdAt = entity.createdAt);
+    transaction.destination = entity.destination;
+    transaction.source = entity.source;
+    transaction.transferType = entity.transferType;
+    transaction.status = entity.status;
+    transaction.metadata = entity.metadata;
+    transaction.transferId = entity.transferId;
+    return transaction;
   }
 }

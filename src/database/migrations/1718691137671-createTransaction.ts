@@ -13,6 +13,13 @@ export class CreateTransaction1718691137671 implements MigrationInterface {
             isGenerated: true,
             primaryKeyConstraintName: 'pk_transactions_id',
           },
+
+          {
+            name: 'transfer_id',
+            type: 'uuid',
+            isNullable: false,
+          },
+
           {
             name: 'source',
             type: 'bigint',
@@ -39,6 +46,11 @@ export class CreateTransaction1718691137671 implements MigrationInterface {
             type: 'varchar',
             isNullable: false,
           },
+          {
+            name: 'metadata',
+            type: 'jsonb',
+            isNullable: false,
+          },
           { name: 'created_at', type: 'timestamp', default: 'now()' },
           { name: 'updated_at', type: 'timestamp', default: 'now()' },
         ],
@@ -50,6 +62,12 @@ export class CreateTransaction1718691137671 implements MigrationInterface {
           {
             columnNames: ['destination'],
             name: 'idx_transactions_destination',
+          },
+        ],
+        uniques: [
+          {
+            columnNames: ['transfer_id'],
+            name: 'uq_transactions_transfer_id',
           },
         ],
       }),

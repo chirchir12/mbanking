@@ -11,6 +11,14 @@ export class Transaction {
   @Column()
   source: number;
 
+  @Index({
+    unique: true,
+  })
+  @Column({
+    name: 'transfer_id',
+  })
+  transferId: string;
+
   @Index()
   @Column()
   destination: number;
@@ -33,4 +41,7 @@ export class Transaction {
 
   @Column({ name: 'updated_at' })
   updatedAt: Date;
+
+  @Column({ type: 'jsonb', default: '{}' })
+  metadata: Record<string, any>;
 }
