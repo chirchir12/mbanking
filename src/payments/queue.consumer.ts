@@ -12,11 +12,11 @@ export class QueueConsumer {
     private readonly notification: NotificationService,
     private readonly paymentService: PaymentService,
   ) {}
-  @Process()
+  @Process({ concurrency: 500 })
   async process(job: Job<any>) {
     const { transaction } = job.data;
 
-    this.logger.log(`Start Processing transaction ${transaction.id}`);
+    this.logger.log(`Start Processing transaction ${transaction.transferId}`);
 
     // simulate user activity
     const result = await this.notification.notify();
